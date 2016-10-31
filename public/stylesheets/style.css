@@ -1,0 +1,33 @@
+/* FlexBoc container */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  height: 100%;
+}
+
+.container:last-child .item {
+  border-bottom: 0px;
+}
+
+.item {
+  flex-grow: 1;
+  border-left: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  height: 100%;
+}
+
+.item:first-child {
+  border-left: 0px;
+}
