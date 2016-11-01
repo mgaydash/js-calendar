@@ -8,9 +8,10 @@ router.get('/', function(req, res, next) {
   res.send( 'hello world' );
 });
 
-router.get('/marking/create', function(req, res, next) {
-  //markingService.create( 
-  res.send( 'created' );
+router.post('/marking/create', function(req, res, next) {
+  markingService.create( req.body.date, req.body.type ); 
+  console.log( req.body );
+  res.send( 'saved: ' + req.body );
 });
 
 module.exports = router;

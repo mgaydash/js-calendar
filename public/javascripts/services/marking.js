@@ -8,7 +8,7 @@ Services.Marking.create = function ( date, type ) {
     type: type
   };
 
-  $.get( "api/marking/create", obj, function( result ) {
+  $.post( "api/marking/create", obj, function( result ) {
     console.log( result );
   } );
 };
