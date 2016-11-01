@@ -17,7 +17,8 @@ $( function () {
       row = elements.row.clone();
       for ( i = 0; i < 7; i++ ) {
         cell = elements.cell.clone();
-        cell.html( date.getDate() );
+        cell.html( '<div>' + date.getDate() + '</div>' );
+        cell.click( onCellClick );
         
         if ( date.getMonth() !== month ) {
           cell.addClass( 'other-month-item' );
@@ -41,6 +42,25 @@ $( function () {
     }
 
     return date;
+  };
+
+  var onCellClick = function () {
+    console.log( this );
+    var that = $( this );
+    console.log( that.find( '.fa-check-circle' ).length );
+
+    if ( that.find( '.fa-check-circle' ).length ) {
+      that.find( '.fa' ).remove();
+      that.append( '<div class="yellow fa fa-minus-circle fa-4x"></div>' );
+    } else if ( that.find( '.fa-minus-circle' ).length ) {
+      that.find( '.fa' ).remove();
+      that.append( '<div class="red fa fa-times-circle fa-4x"></div>' );
+    } else if ( that.find( '.fa-times-circle' ).length ) {
+      that.find( '.fa' ).remove();
+    } else {
+      that.find( '.fa' ).remove();
+      that.append( '<div class="green fa fa-check-circle fa-4x"></div>' );
+    }
   };
 
   draw();
