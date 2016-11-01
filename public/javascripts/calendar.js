@@ -20,19 +20,31 @@ $( function () {
 
       if ( that.find( '.fa-check-circle' ).length ) {
         that.find( '.fa' ).remove();
-        that.append( '<div class="icon yellow fa fa-minus-circle fa-4x"></div>' );
+        that.append( createMinusIcon() );
         selected = 'minus';
       } else if ( that.find( '.fa-minus-circle' ).length ) {
         that.find( '.fa' ).remove();
-        that.append( '<div class="icon red fa fa-times-circle fa-4x"></div>' );
+        that.append( createTimesIcon() );
         selected = 'times';
       } else if ( that.find( '.fa-times-circle' ).length ) {
         that.find( '.fa' ).remove();
       } else {
-        that.append( '<div class="icon green fa fa-check-circle fa-4x"></div>' );
+        that.append( createCheckIcon() );
         selected = 'check';
       }
     } );
+  };
+
+  var createCheckIcon = function () {
+    return $( '<div class="icon green fa fa-check-circle fa-4x"></div>' );
+  };
+
+  var createMinusIcon = function () {
+    return $( '<div class="icon yellow fa fa-minus-circle fa-4x"></div>' );
+  };
+
+  var createTimesIcon = function () {
+    return $( '<div class="icon red fa fa-times-circle fa-4x"></div>' );
   };
   
   // Returns first date that should NOT be drawn by the calendar
@@ -65,7 +77,7 @@ $( function () {
   };
 
   // Draw the calendar
-  var draw = function () {
+  var draw = function ( markings ) {
     var date = createVisualStartDate();
     var month = new Date().getMonth();
     var i;
@@ -101,7 +113,7 @@ $( function () {
   };
 
   loadMarkings().done( function ( data ) {
-    draw();
+    draw( data );
   } );
 } );
 
