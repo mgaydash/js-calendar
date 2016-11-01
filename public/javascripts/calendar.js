@@ -6,6 +6,7 @@ $( function () {
   elements.cell = $( '.item' ).detach();
   elements.row = $( '.container' ).detach();
 
+  // Draw the calendar
   var draw = function () {
     var date = createVisualStartDate();
     var month = new Date().getMonth();
@@ -34,7 +35,6 @@ $( function () {
   // Returns the first date to be drawn by the calendar
   var createVisualStartDate = function ( date ) {
     date = date || new Date();
-
     date.setDate( 1 );
 
     while ( date.getDay() !== 0 ) {
@@ -44,10 +44,9 @@ $( function () {
     return date;
   };
 
+  // Event handler for when users click on cells in the calendar
   var onCellClick = function () {
-    console.log( this );
     var that = $( this );
-    console.log( that.find( '.fa-check-circle' ).length );
 
     if ( that.find( '.fa-check-circle' ).length ) {
       that.find( '.fa' ).remove();
