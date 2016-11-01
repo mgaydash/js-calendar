@@ -43,6 +43,11 @@ html, body {
   color: gold;
 }
 
+.icon {
+  text-align: center;
+  width: 100%;
+}
+
 .item:first-child {
   border-left: 0px;
 }

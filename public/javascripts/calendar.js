@@ -6,6 +6,18 @@ $( function () {
   elements.cell = $( '.item' ).detach();
   elements.row = $( '.container' ).detach();
 
+  // Returns the first date to be drawn by the calendar
+  var createVisualStartDate = function ( date ) {
+    date = date || new Date();
+    date.setDate( 1 );
+
+    while ( date.getDay() !== 0 ) {
+      date.setDate( date.getDate() - 1 );
+    }
+
+    return date;
+  };
+
   // Draw the calendar
   var draw = function () {
     var date = createVisualStartDate();
@@ -32,34 +44,23 @@ $( function () {
     }
   };
 
-  // Returns the first date to be drawn by the calendar
-  var createVisualStartDate = function ( date ) {
-    date = date || new Date();
-    date.setDate( 1 );
-
-    while ( date.getDay() !== 0 ) {
-      date.setDate( date.getDate() - 1 );
-    }
-
-    return date;
-  };
-
   // Event handler for when users click on cells in the calendar
   var onCellClick = function () {
     var that = $( this );
 
     if ( that.find( '.fa-check-circle' ).length ) {
       that.find( '.fa' ).remove();
-      that.append( '<div class="yellow fa fa-minus-circle fa-4x"></div>' );
+      that.append( '<div class="icon yellow fa fa-minus-circle fa-4x"></div>' );
     } else if ( that.find( '.fa-minus-circle' ).length ) {
       that.find( '.fa' ).remove();
-      that.append( '<div class="red fa fa-times-circle fa-4x"></div>' );
+      that.append( '<div class="icon red fa fa-times-circle fa-4x"></div>' );
     } else if ( that.find( '.fa-times-circle' ).length ) {
       that.find( '.fa' ).remove();
     } else {
-      that.append( '<div class="green fa fa-check-circle fa-4x"></div>' );
+      that.append( '<div class="icon green fa fa-check-circle fa-4x"></div>' );
     }
   };
 
   draw();
 } );
+
