@@ -11,6 +11,14 @@ $( function () {
 
   var bindEventHandlers = function () {
 
+    elements.next.click( function () {
+      $( '.container' ).remove();
+      drawDate.setMonth( drawDate.getMonth() + 1 );
+      loadMarkings().done( function ( data ) {
+        draw( data );
+      } );
+    } );
+
     elements.prev.click( function () {
       $( '.container' ).remove();
       drawDate.setMonth( drawDate.getMonth() - 1 );
@@ -55,7 +63,7 @@ $( function () {
 
   var createDateKey = function ( date ) {
     date = new Date( date );
-    return "" +  date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+    return "" +  date.getFullYear() + "-" + ( date.getUTCMonth() + 1 ) + "-" + date.getUTCDate();
   };
 
   var createMinusIcon = function () {

@@ -40,6 +40,8 @@ services.create = function ( date, type ) {
 	MongoClient.connect( 'mongodb://localhost:27017/calendar', function( err, db ) {
     assert.equal( null, err );
 
+    db.collection( 'marking' ).deleteMany( { date: date }, function ( err, r ) {} );
+
     db.collection( 'marking' ).insertOne( obj, function( err, r ) {
       assert.equal( null, err );
       assert.equal( 1, r.insertedCount );
