@@ -47,17 +47,21 @@ $( function () {
   // Event handler for when users click on cells in the calendar
   var onCellClick = function () {
     var that = $( this );
+    var selected = null;
 
     if ( that.find( '.fa-check-circle' ).length ) {
       that.find( '.fa' ).remove();
       that.append( '<div class="icon yellow fa fa-minus-circle fa-4x"></div>' );
+      selected = 'minus';
     } else if ( that.find( '.fa-minus-circle' ).length ) {
       that.find( '.fa' ).remove();
       that.append( '<div class="icon red fa fa-times-circle fa-4x"></div>' );
+      selected = 'times';
     } else if ( that.find( '.fa-times-circle' ).length ) {
       that.find( '.fa' ).remove();
     } else {
       that.append( '<div class="icon green fa fa-check-circle fa-4x"></div>' );
+      selected = 'check';
     }
   };
 
