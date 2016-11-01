@@ -8,9 +8,14 @@ router.get('/', function(req, res, next) {
   res.send( 'hello world' );
 });
 
+router.post('/marking', function(req, res, next) {
+  markingService.retrieveForDateRange( req.body.startDate, req.body.endDate ).then( function ( data ) {
+    res.send( data );
+  } );
+});
+
 router.post('/marking/create', function(req, res, next) {
   markingService.create( req.body.date, req.body.type ); 
-  console.log( req.body );
   res.send( 'saved: ' + req.body );
 });
 
