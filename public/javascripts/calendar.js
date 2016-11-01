@@ -58,7 +58,6 @@ $( function () {
     } else if ( that.find( '.fa-times-circle' ).length ) {
       that.find( '.fa' ).remove();
     } else {
-      that.find( '.fa' ).remove();
       that.append( '<div class="green fa fa-check-circle fa-4x"></div>' );
     }
   };
