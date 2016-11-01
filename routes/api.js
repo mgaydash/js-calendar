@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   res.send( 'hello world' );
 });
 
-router.get('/create', function(req, res, next) {
+router.get('/marking/create', function(req, res, next) {
   //markingService.create( 
   res.send( 'created' );
 });
