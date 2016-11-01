@@ -3,8 +3,8 @@ $( function () {
 
   var $ = window.$ || ( function () { throw "jQuery not found"; } )(); 
   var elements = {};
-  elements.cell = $('.item').detach();
-  elements.row = $('.container').detach();
+  elements.cell = $( '.item' ).detach();
+  elements.row = $( '.container' ).detach();
 
   var draw = function () {
     var date = createVisualStartDate();
