@@ -2,9 +2,23 @@ $( function () {
   "use strict";
 
   var $ = window.$ || ( function () { throw "jQuery not found"; } )(); 
+  var drawDate = new Date();
   var elements = {};
   elements.cell = $( '.item' ).detach();
   elements.row = $( '.container' ).detach();
+  elements.prev = $( '.button-prev' );
+  elements.next = $( '.button-next' );
+
+  var bindEventHandlers = function () {
+
+    elements.prev.click( function () {
+      $( '.container' ).remove();
+      drawDate.setMonth( drawDate.getMonth() - 1 );
+      loadMarkings().done( function ( data ) {
+        draw( data );
+      } );
+    } );
+  };
 
   var bindOnCellClick = function ( cell, date ) {
     var toid;
@@ -54,8 +68,8 @@ $( function () {
   
   // Returns first date that should NOT be drawn by the calendar
   // We can do a < comparison.
-  var createVisualEndDate = function ( date ) {
-    date = date || new Date();
+  var createVisualEndDate = function () {
+    var date = new Date( drawDate );
     var month = date.getMonth();
   
     date.setDate( 28 );
@@ -70,8 +84,8 @@ $( function () {
   };
 
   // Returns the first date to be drawn by the calendar
-  var createVisualStartDate = function ( date ) {
-    date = date || new Date();
+  var createVisualStartDate = function () {
+    var date = new Date( drawDate );
     date.setDate( 1 );
 
     while ( date.getDay() !== 0 ) {
@@ -84,7 +98,7 @@ $( function () {
   // Draw the calendar
   var draw = function ( markings ) {
     var date = createVisualStartDate();
-    var month = new Date().getMonth();
+    var month = drawDate.getMonth();
     var i;
     var row;
     var cell;
@@ -139,5 +153,6 @@ $( function () {
   loadMarkings().done( function ( data ) {
     draw( data );
   } );
+  bindEventHandlers();
 } );
 
