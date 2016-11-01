@@ -18,6 +18,11 @@ $( function () {
       for ( i = 0; i < 7; i++ ) {
         cell = elements.cell.clone();
         cell.html( date.getDate() );
+        
+        if ( date.getMonth() !== month ) {
+          cell.addClass( 'other-month-item' );
+        }
+
         row.append( cell );
         date.setDate( date.getDate() + 1 );
       }

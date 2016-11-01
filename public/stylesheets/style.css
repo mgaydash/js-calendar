@@ -1,4 +1,4 @@
-/* FlexBoc container */
+/* FlexBox container */
 * {
   box-sizing: border-box;
 }
@@ -29,6 +29,13 @@ html, body {
   width: 100%;
 }
 
+
+/* Display classes */
 .item:first-child {
   border-left: 0px;
 }
+
+.other-month-item {
+  background-color: #f2f2f2;
+}
+
