@@ -8,7 +8,7 @@ services.retrieveForDateRange = function ( startDate, endDate ) {};
 services.create = function ( date, type ) {
   var obj = {};
   
-  obj.date = date;
+  obj.date = new Date( date );
   obj.type = type;
 
 	MongoClient.connect( 'mongodb://localhost:27017/calendar', function( err, db ) {
