@@ -39,6 +39,11 @@ $( function () {
     return $( '<div class="icon green fa fa-check-circle fa-4x"></div>' );
   };
 
+  var createDateKey = function ( date ) {
+    date = new Date( date );
+    return "" +  date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+  };
+
   var createMinusIcon = function () {
     return $( '<div class="icon yellow fa fa-minus-circle fa-4x"></div>' );
   };
@@ -83,16 +88,28 @@ $( function () {
     var i;
     var row;
     var cell;
+    var dateKey;
 
     while ( date.getMonth() <= month ) {
       row = elements.row.clone();
       for ( i = 0; i < 7; i++ ) {
         cell = elements.cell.clone();
+        dateKey = createDateKey( date );
         cell.html( '<div>' + date.getDate() + '</div>' );
         bindOnCellClick( cell, new Date( date ) );
         
         if ( date.getMonth() !== month ) {
           cell.addClass( 'other-month-item' );
+        }
+
+        if ( markings[ dateKey ] ) {
+          if ( markings[ dateKey ].type === 'check' ) {
+            cell.append( createCheckIcon() );
+          } else if ( markings[ dateKey ].type === 'minus' ) {
+            cell.append( createMinusIcon() );
+          } else if ( markings[ dateKey ].type === 'times' ) {
+            cell.append( createTimesIcon() );
+          }
         }
 
         row.append( cell );
@@ -104,9 +121,16 @@ $( function () {
 
   var loadMarkings = function () {
    var d = $.Deferred();
+   var markMap = {};
 
    Services.Marking.forDateRange( createVisualStartDate(), createVisualEndDate() ).done( function ( data ) {
-     d.resolve( data );
+     var i;
+     
+     for ( i = 0; i < data.length; i++ ) {
+       markMap[ createDateKey( data[ i ].date ) ] = data[ i ];
+     }
+
+     d.resolve( markMap );
    } ); 
    
    return d.promise();

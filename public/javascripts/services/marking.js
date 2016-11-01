@@ -21,7 +21,6 @@ Services.Marking.forDateRange = function ( startDate, endDate ) {
   };
 
   $.post( "api/marking", obj, function( result ) {
-    console.log( result );
     d.resolve( result );
   } );
 
