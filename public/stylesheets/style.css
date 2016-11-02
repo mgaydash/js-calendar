@@ -5,7 +5,6 @@
 
 html, body {
   display: flex;
-  flex-direction: column;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -14,7 +13,9 @@ html, body {
 
 .container {
   display: flex;
+  flex-direction: column;
   height: 100%;
+  width: 100%;
 }
 
 .item {
@@ -25,6 +26,15 @@ html, body {
   width: 100%;
 }
 
+.panel {
+  height: 100%;
+  width: 300px;
+}
+
+.row {
+  display: flex;
+  height: 100%;
+}
 
 /* Display classes */
 .green {
@@ -44,8 +54,8 @@ html, body {
   width: 100%;
 }
 
-.item:first-child {
-  border-left: 0px;
+.row:first-child > .item {
+  border-top: 0px;
 }
 
 .other-month-item {

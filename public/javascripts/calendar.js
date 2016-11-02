@@ -5,13 +5,14 @@ $( function () {
   var drawDate = new Date();
   var elements = {};
   elements.cell = $( '.item' ).detach();
-  elements.row = $( '.container' ).detach();
+  elements.row = $( '.row' ).detach();
   elements.prev = $( '.button-prev' );
   elements.next = $( '.button-next' );
+  elements.container = $( '.container' );
 
   var bindEventHandlers = function () {
     elements.next.click( function () {
-      $( '.container' ).remove();
+      $( '.row' ).remove();
       drawDate.setMonth( drawDate.getMonth() + 1 );
       loadMarkings().done( function ( data ) {
         draw( data );
@@ -19,7 +20,7 @@ $( function () {
     } );
 
     elements.prev.click( function () {
-      $( '.container' ).remove();
+      $( '.row' ).remove();
       drawDate.setMonth( drawDate.getMonth() - 1 );
       loadMarkings().done( function ( data ) {
         draw( data );
@@ -136,7 +137,7 @@ $( function () {
         row.append( cell );
         date.setDate( date.getDate() + 1 );
       }
-      $( 'body' ).append( row );
+      elements.container.append( row );
     }
   };
 
