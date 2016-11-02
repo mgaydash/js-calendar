@@ -12,10 +12,12 @@ var Marking = mongoose.model( 'Marking', mongoose.Schema( {
 } ) );
 
 module.exports.retrieveForDateRange = function ( startDate, endDate ) {
+  startDate = new Date( startDate );
+  startDate.setDate( startDate.getDate() - 1 );
   return new Promise( function ( resolve, reject ) {
     Marking.find( {
       date: {
-        $gte: new Date( startDate ),
+        $gte: startDate,
         $lt: new Date( endDate )
       }
     }, function( err, markings ) {
