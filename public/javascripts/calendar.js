@@ -113,7 +113,7 @@ $( function () {
     var cell;
     var dateKey;
 
-    elements.dateMonth.html( drawDate.toString() );
+    elements.dateMonth.html( moment( drawDate ).format( 'MMMM YYYY' ) );
     while ( date.getMonth() <= month ) {
       row = elements.row.clone();
       for ( i = 0; i < 7; i++ ) {
