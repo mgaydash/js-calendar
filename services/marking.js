@@ -1,55 +1,54 @@
-var MongoClient = require( 'mongodb' ).MongoClient;
+var mongoose = require( 'mongoose' );
 var assert = require('assert');
 
-var services = {};
+// Use native promises
+mongoose.Promise = global.Promise;
 
-services.retrieveForDateRange = function ( startDate, endDate ) {
+mongoose.connect( 'mongodb://localhost:27017/calendar' );
+
+var Marking = mongoose.model( 'Marking', mongoose.Schema( {
+  type: String,
+  date: Date
+} ) );
+
+module.exports.retrieveForDateRange = function ( startDate, endDate ) {
   return new Promise( function ( resolve, reject ) {
-    var obj = {
+    Marking.find( {
       date: {
         $gte: new Date( startDate ),
         $lt: new Date( endDate )
       }
-    };
-    
-    MongoClient.connect( 'mongodb://localhost:27017/calendar', function( err, db ) {
-      assert.equal( null, err );
+    }, function( err, markings ) {
+      if ( err ) {
+        console.log( 'Error retrieving markings for start date: ' + startDate + ' and end date ' + endDate );
+        reject( err );
+      }
 
-      db.collection( 'marking' ).find( obj ).toArray( function( err, markings ) {
-        assert.equal( null, err );
-        resolve( markings );
-
-        db.close();
-      } );
+      resolve( markings );
     } );
   } );
 };
 
-services.create = function ( date, type ) {
-  var obj = {};
-
+module.exports.create = function ( date, type ) {
   date = new Date( date );
   date.setUTCMilliseconds( 0 );
   date.setUTCSeconds( 0 );
   date.setUTCMinutes( 0 );
   date.setUTCHours( 0 );
-  
-  obj.date = date;
-  obj.type = type;
 
-	MongoClient.connect( 'mongodb://localhost:27017/calendar', function( err, db ) {
-    assert.equal( null, err );
+  Marking.remove( { date: date }, function ( err ) {
+    if ( err ) {
+      console.log( 'Error removing marking for date: ' + date );
+    }
+  } );
 
-    db.collection( 'marking' ).deleteMany( { date: date }, function ( err, r ) {} );
-
-    db.collection( 'marking' ).insertOne( obj, function( err, r ) {
-      assert.equal( null, err );
-      assert.equal( 1, r.insertedCount );
-
-      db.close();
-    } );
-	} );
+  new Marking( {
+    date: date,
+    type: type
+  } ).save( function ( err ) {
+    if ( err ) {
+      console.log( 'Error saving marking for date: ' + date );
+    }
+  } );
 };
-
-module.exports = services;
 
