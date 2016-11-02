@@ -9,6 +9,7 @@ $( function () {
   elements.prev = $( '.button-prev' );
   elements.next = $( '.button-next' );
   elements.container = $( '.container' );
+  elements.dateMonth = $( '.date-month' );
 
   var bindEventHandlers = function () {
     elements.next.click( function () {
@@ -112,6 +113,7 @@ $( function () {
     var cell;
     var dateKey;
 
+    elements.dateMonth.html( drawDate.toString() );
     while ( date.getMonth() <= month ) {
       row = elements.row.clone();
       for ( i = 0; i < 7; i++ ) {

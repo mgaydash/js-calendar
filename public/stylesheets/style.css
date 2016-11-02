@@ -26,6 +26,20 @@ html, body {
   width: 100%;
 }
 
+.dow-container {
+  display: flex;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.dow-item {
+  border-left: 1px solid #cccccc;
+  border-top: 1px solid #cccccc;
+  flex-grow: 1;
+  text-align: center;
+  width: 100%;
+}
+
 .panel {
   height: 100%;
   width: 300px;
@@ -52,10 +66,6 @@ html, body {
 .icon {
   text-align: center;
   width: 100%;
-}
-
-.row:first-child > .item {
-  border-top: 0px;
 }
 
 .other-month-item {
