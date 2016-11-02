@@ -10,7 +10,6 @@ $( function () {
   elements.next = $( '.button-next' );
 
   var bindEventHandlers = function () {
-
     elements.next.click( function () {
       $( '.container' ).remove();
       drawDate.setMonth( drawDate.getMonth() + 1 );
