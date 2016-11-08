@@ -30,7 +30,6 @@ app.use( helmet() );
 app.use( function ( req, res, next ) {
   var credentials = auth( req );
 
-  console.log( credentials );
   if ( credentials && credentials.name=== 'mgadminx' && credentials.pass === 'superpasshorse' ) {
     next();
   } else {
