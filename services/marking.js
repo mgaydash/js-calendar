@@ -11,8 +11,72 @@ var Marking = mongoose.model( 'Marking', mongoose.Schema( {
   date: Date
 } ) );
 
+var clearDateTime = function ( date ) {
+  date = new Date( date );
+  date.setUTCMilliseconds( 0 );
+  date.setUTCSeconds( 0 );
+  date.setUTCMinutes( 0 );
+  date.setUTCHours( 0 );
+
+  return date;
+};
+
+module.exports.monthStatistics = function ( date ) {
+  var startDate = clearDateTime( date );
+  var endDate = clearDateTime( date );
+
+  // TODO
+  // I don't know why I can't get this date logic to work.
+  startDate.setDate( 0 );
+  endDate.setDate( 28 );
+  while( endDate.getMonth() === startDate.getMonth() ) {
+    endDate.setDate( endDate.getDate() + 1 );
+  }
+
+  return new Promise( function ( resolve, reject ) {
+    Marking.find( {
+      date: {
+        $gte: startDate,
+        $lt: endDate
+      }
+    }, function ( err, markings ) {
+      var i;
+      var result = {};
+      result.checkCount = 0;
+      result.minusCount = 0;
+      result.timesCount = 0;
+
+      if ( err ) {
+        console.log( err );
+        reject( err );
+      }
+
+      for ( i = 0; i < markings.length; i++ ) {
+        switch( markings[ i ].type ) {
+          case 'times':
+            result.timesCount++;
+            break;
+          case 'minus':
+            result.minusCount++;
+            break;
+          case 'check':
+            result.checkCount++;
+            break;
+          default:
+            break;
+        }
+      }
+
+      resolve( result );
+    } );
+  } );
+};
+
 module.exports.retrieveForDateRange = function ( startDate, endDate ) {
   startDate = new Date( startDate );
+
+  // This is a little hack. We want to make sure we get all events for the first
+  // day on the calendar
   startDate.setDate( startDate.getDate() - 1 );
   return new Promise( function ( resolve, reject ) {
     Marking.find( {
@@ -32,11 +96,7 @@ module.exports.retrieveForDateRange = function ( startDate, endDate ) {
 };
 
 module.exports.create = function ( date, type ) {
-  date = new Date( date );
-  date.setUTCMilliseconds( 0 );
-  date.setUTCSeconds( 0 );
-  date.setUTCMinutes( 0 );
-  date.setUTCHours( 0 );
+  date = clearDateTime( date );
 
   Marking.remove( { date: date }, function ( err ) {
     if ( err ) {

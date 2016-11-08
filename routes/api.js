@@ -19,4 +19,10 @@ router.post('/marking/create', function(req, res, next) {
   res.send( 'saved: ' + req.body );
 });
 
+router.post('/marking/statistics', function(req, res, next) {
+  markingService.monthStatistics( req.body.date ).then( function ( data ) {
+    res.send( data );
+  } );
+});
+
 module.exports = router;

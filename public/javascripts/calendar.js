@@ -18,6 +18,7 @@ $( function () {
       loadMarkings().done( function ( data ) {
         draw( data );
       } );
+      loadStatistics();
     } );
 
     elements.prev.click( function () {
@@ -26,6 +27,7 @@ $( function () {
       loadMarkings().done( function ( data ) {
         draw( data );
       } );
+      loadStatistics();
     } );
   };
 
@@ -160,6 +162,11 @@ $( function () {
    return d.promise();
   };
 
+  var loadStatistics = function () {
+    Services.Marking.monthStatistics( drawDate );
+  };
+
+  loadStatistics();
   loadMarkings().done( function ( data ) {
     draw( data );
   } );

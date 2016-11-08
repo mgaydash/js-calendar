@@ -27,3 +27,14 @@ Services.Marking.forDateRange = function ( startDate, endDate ) {
   return d.promise();
 };
 
+Services.Marking.monthStatistics = function ( date ) {
+  var d = $.Deferred();
+
+  $.post( "api/marking/statistics", { date: date }, function( result ) {
+    console.log( result );
+    d.resolve( result );
+  } );
+
+  return d.promise();
+};
+
