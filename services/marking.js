@@ -22,16 +22,22 @@ var clearDateTime = function ( date ) {
 };
 
 module.exports.monthStatistics = function ( date ) {
-  var startDate = clearDateTime( date );
+  var startDate = new Date( date );
   var endDate = clearDateTime( date );
+
+  startDate.setDate( 1 );
+  startDate = clearDateTime( startDate );
 
   // TODO
   // I don't know why I can't get this date logic to work.
-  startDate.setDate( 0 );
   endDate.setDate( 28 );
   while( endDate.getMonth() === startDate.getMonth() ) {
     endDate.setDate( endDate.getDate() + 1 );
   }
+  endDate.setDate( endDate.getDate() + 1 );
+
+  console.log( startDate.toISOString() );
+  console.log( endDate.toISOString() );
 
   return new Promise( function ( resolve, reject ) {
     Marking.find( {
@@ -45,6 +51,7 @@ module.exports.monthStatistics = function ( date ) {
       result.checkCount = 0;
       result.minusCount = 0;
       result.timesCount = 0;
+      result.markings = markings;
 
       if ( err ) {
         console.log( err );

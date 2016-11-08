@@ -15,20 +15,21 @@ $( function () {
     elements.next.click( function () {
       $( '.row' ).remove();
       drawDate.setMonth( drawDate.getMonth() + 1 );
-      loadMarkings().done( function ( data ) {
-        draw( data );
-      } );
-      loadStatistics();
+      auto();
     } );
 
     elements.prev.click( function () {
       $( '.row' ).remove();
       drawDate.setMonth( drawDate.getMonth() - 1 );
-      loadMarkings().done( function ( data ) {
-        draw( data );
-      } );
-      loadStatistics();
+      auto();
     } );
+  };
+
+  var auto = function () {
+    loadMarkings().done( function ( data ) {
+      draw( data );
+    } );
+    loadStatistics();
   };
 
   var bindOnCellClick = function ( cell, date ) {
@@ -166,10 +167,7 @@ $( function () {
     Services.Marking.monthStatistics( drawDate );
   };
 
-  loadStatistics();
-  loadMarkings().done( function ( data ) {
-    draw( data );
-  } );
+  auto();
   bindEventHandlers();
 } );
 
