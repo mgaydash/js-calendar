@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var helmet = require( 'helmet' );
+var auth = require( 'basic-auth' );
 
 var routes = require('./routes/index');
 var apiRoutes = require('./routes/api');
@@ -25,6 +26,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Enable Helmet for security hardening
 app.use( helmet() );
+
+app.use( function ( req, res, next ) {
+  var credentials = auth( req );
+
+  console.log( credentials );
+  if ( credentials && credentials.name=== 'mgadminx' && credentials.pass === 'superpasshorse' ) {
+    next();
+  } else {
+    res.statusCode = 401;
+    res.setHeader( 'WWW-Authenticate', 'Basic realm="test"' );
+    res.end( 'Access Denied' );
+  }
+} );
 
 // Routing
 app.use('/', routes);
