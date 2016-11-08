@@ -10,6 +10,9 @@ $( function () {
   elements.next = $( '.button-next' );
   elements.container = $( '.container' );
   elements.dateMonth = $( '.date-month' );
+  elements.statTimes = $( '.stat-times' );
+  elements.statMinus = $( '.stat-minus' );
+  elements.statCheck = $( '.stat-check' );
 
   var bindEventHandlers = function () {
     elements.next.click( function () {
@@ -29,7 +32,11 @@ $( function () {
     loadMarkings().done( function ( data ) {
       draw( data );
     } );
-    loadStatistics();
+    loadStatistics().done( function ( data ) {
+      elements.statTimes.html( data.timesCount );
+      elements.statMinus.html( data.minusCount );
+      elements.statCheck.html( data.checkCount );
+    } );
   };
 
   var bindOnCellClick = function ( cell, date ) {
@@ -164,7 +171,13 @@ $( function () {
   };
 
   var loadStatistics = function () {
-    Services.Marking.monthStatistics( drawDate );
+    var d = $.Deferred();
+
+    Services.Marking.monthStatistics( drawDate ).done( function( data ) {
+      d.resolve( data );
+    } );
+
+    return d.promise();
   };
 
   auto();
