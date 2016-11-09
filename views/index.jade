@@ -3,11 +3,19 @@ extends layout
 block content
   div.panel
     button.button-prev <<
+    span.date-month
     button.button-next >>
-    div.date-month
-    div.stat-times
-    div.stat-minus
-    div.stat-check
+    table
+      thead
+        tr
+         th.red Red
+         th.yellow Yellow
+         th.green Green
+      tbody
+        tr
+          td.stat-times
+          td.stat-minus
+          td.stat-check
   div.container
     div.dow-container
       div.dow-item S
