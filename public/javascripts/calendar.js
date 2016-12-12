@@ -122,9 +122,10 @@ $( function () {
     var row;
     var cell;
     var dateKey;
+    var isDecToJan = false;
 
     elements.dateMonth.html( moment( drawDate ).format( 'MMMM YYYY' ) );
-    while ( date.getMonth() <= month ) {
+    while ( date.getMonth() <= month && !isDecToJan ) {
       row = elements.row.clone();
       for ( i = 0; i < 7; i++ ) {
         cell = elements.cell.clone();
@@ -148,6 +149,10 @@ $( function () {
 
         row.append( cell );
         date.setDate( date.getDate() + 1 );
+
+        if ( month === 11 && date.getMonth() === 0 ) {
+          isDecToJan = true;
+        }
       }
       elements.container.append( row );
     }
